@@ -14,7 +14,20 @@ An [MCP](https://modelcontextprotocol.io) server that wraps the [Modrinth](https
 | `modrinth_create_project` | ✅ | Create a **new project** (as a draft). |
 | `modrinth_modify_version` | ✅ | Edit metadata of an existing version. |
 
-Read-only tools work without a token. Anything that writes needs a Modrinth **Personal Access Token**.
+Every read endpoint in the [Modrinth API](https://docs.modrinth.com/api/) is also available. Auth: – none, ◐ token optional (lets you see your drafts/private items), ✅ token required.
+
+| Area | Tools |
+| --- | --- |
+| Projects | `modrinth_get_projects` ◐, `modrinth_random_projects`, `modrinth_check_project` ◐, `modrinth_get_project_dependencies` ◐, `modrinth_get_project_team` ◐ |
+| Versions | `modrinth_get_version` ◐, `modrinth_get_project_version` ◐, `modrinth_get_versions` ◐ |
+| Version files (by hash) | `modrinth_get_version_from_hash`, `modrinth_get_latest_version_from_hash`, `modrinth_get_versions_from_hashes`, `modrinth_get_latest_versions_from_hashes` |
+| Users | `modrinth_get_user`, `modrinth_get_users`, `modrinth_get_user_projects` ◐, `modrinth_get_followed_projects` ✅, `modrinth_get_payout_history` ✅ |
+| Notifications | `modrinth_get_user_notifications` ✅, `modrinth_get_notification` ✅, `modrinth_get_notifications` ✅ |
+| Reports & threads | `modrinth_get_open_reports` ✅, `modrinth_get_report` ✅, `modrinth_get_reports` ✅, `modrinth_get_thread` ✅, `modrinth_get_threads` ✅ |
+| Teams | `modrinth_get_team_members` ◐, `modrinth_get_teams` ◐ |
+| Tags & misc | `modrinth_get_tags` (categories, loaders, game versions, licenses, donation platforms, report/project/side types), `modrinth_get_license_text`, `modrinth_get_forge_updates`, `modrinth_get_statistics` |
+
+Public reads work without a token. Anything that writes, or reads private data, needs a Modrinth **Personal Access Token** (private reads need the matching read scope, e.g. `NOTIFICATION_READ`, `PAYOUTS_READ`).
 
 ## Getting a token
 
@@ -101,6 +114,15 @@ MODRINTH_STAGING=1 MODRINTH_TOKEN=your-staging-pat npm start
 ```
 
 The server speaks MCP over stdio. `stdout` is reserved for the protocol; logs go to `stderr`.
+
+### Tests
+
+```bash
+npm test                    # unit + in-memory MCP tests, fully offline (mocked fetch)
+MODRINTH_LIVE=1 npm test    # also runs read-only smoke tests against the real API
+```
+
+Layout: `src/client.js` (HTTP helpers), `src/tools.js` (original + write tools), `src/read-tools.js` (read endpoints), `src/server.js` (MCP wiring). Tests are in `test/` and use Node's built-in runner, so there are no extra dependencies.
 
 ## License
 
