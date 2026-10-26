@@ -1,6 +1,6 @@
 {
   "name": "@tarper24/modrinth-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "mcpName": "io.github.tarper24/modrinth-mcp",
   "description": "MCP server for searching Modrinth and publishing Minecraft mods (create projects, upload versions) via the Modrinth API.",
   "type": "module",
@@ -14,7 +14,10 @@
   ],
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test"
+    "test": "node --test",
+    "sync-version": "node scripts/sync-version.js",
+    "check-version": "node scripts/sync-version.js --check",
+    "version": "node scripts/sync-version.js && git add server.json plugins/modrinth/.claude-plugin/plugin.json .claude-plugin/marketplace.json"
   },
   "engines": {
     "node": ">=20"

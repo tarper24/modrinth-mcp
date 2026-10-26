@@ -33,6 +33,10 @@ jobs:
           fi
           echo "Version $pkg_version matches release tag $TAG"
 
+      # server.json / plugin manifests must carry the same version as package.json.
+      - name: Verify manifests are in sync
+        run: npm run check-version
+
       - run: npm ci
 
       - run: npm test

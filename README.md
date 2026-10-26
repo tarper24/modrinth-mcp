@@ -140,6 +140,16 @@ MODRINTH_LIVE=1 npm test    # also runs read-only smoke tests against the real A
 
 Layout: `src/client.js` (HTTP helpers), `src/tools.js` (original + write tools), `src/read-tools.js` (read endpoints), `src/server.js` (MCP wiring). Tests are in `test/` and use Node's built-in runner, so there are no extra dependencies.
 
+### Releasing
+
+`package.json` is the single source of truth for the version. The server reads it at runtime, and `npm version` copies it into `server.json`, the plugin manifest and the marketplace manifest.
+
+```bash
+npm version patch --no-git-tag-version   # or minor / major / an explicit x.y.z
+```
+
+Commit the result, then publish a GitHub release tagged `v<version>`. The publish workflow refuses to run if the tag, `package.json` or any manifest disagree (`npm run check-version` runs the same check locally).
+
 ## License
 
 [MIT](./LICENSE)
