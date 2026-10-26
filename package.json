@@ -1,6 +1,6 @@
 {
   "name": "@tarper24/modrinth-mcp",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "mcpName": "io.github.tarper24/modrinth-mcp",
   "description": "MCP server for searching Modrinth and publishing Minecraft mods (create projects, upload versions) via the Modrinth API.",
   "type": "module",
