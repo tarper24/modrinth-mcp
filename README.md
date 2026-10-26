@@ -1,6 +1,8 @@
 # modrinth-mcp
 
-An [MCP](https://modelcontextprotocol.io) server that wraps the [Modrinth](https://modrinth.com) API so an AI agent (Claude Code, Claude Desktop, Cursor, …) can search projects, read project/version metadata, and **publish Minecraft mods** — create projects and upload built jars as new versions.
+An [MCP](https://modelcontextprotocol.io) server that wraps the [Modrinth](https://modrinth.com) API so an AI agent (Claude Code, Claude Desktop, Cursor, …) can search projects, read anything the public [Modrinth API](https://docs.modrinth.com/api/) exposes (projects, versions, hash lookups, users, teams, tags, and your private notifications/reports), and **publish Minecraft mods** — create projects and upload built jars as new versions.
+
+> This is a fork of [justinscott12/modrinth-mcp](https://github.com/justinscott12/modrinth-mcp). It adds the full set of read endpoints and an automated test suite. The npm package and registry identifiers are still `@justinscott12/modrinth-mcp`, so `npx` installs below fetch the upstream release until this fork is published. To use this version now, [run it from source](#development).
 
 ## Tools
 
@@ -31,22 +33,22 @@ Public reads work without a token. Anything that writes, or reads private data, 
 
 ## Getting a token
 
-Create a PAT at <https://modrinth.com/settings/pats> with these scopes:
+Create a PAT at <https://modrinth.com/settings/pats> with these scopes for publishing:
 
 - Read projects
 - Read versions
 - Create versions
 - Write versions
 
-Set it as the `MODRINTH_TOKEN` environment variable.
+Add scopes only for the private reads you want: notifications, reports/threads, payouts and followed projects each need their own read scope. Set the token as the `MODRINTH_TOKEN` environment variable.
 
 ## Install
 
 ### As a Claude Code plugin
 
 ```bash
-/plugin marketplace add justinscott12/modrinth-mcp
-/plugin install modrinth-mcp@justinscott12
+/plugin marketplace add tarper24/modrinth-mcp
+/plugin install modrinth-mcp@tarper24
 ```
 
 It runs the published npm package under the hood via `npx`. Claude Code
@@ -62,8 +64,9 @@ export MODRINTH_TOKEN=your-modrinth-pat
 setx MODRINTH_TOKEN "your-modrinth-pat"
 ```
 
-Then restart Claude Code and run `modrinth_whoami` to confirm. Read-only
-tools (search, get project/versions) work without a token.
+Then restart Claude Code and run `modrinth_whoami` to confirm. Public read
+tools work without a token; with one set, project, version and team reads can
+also see your drafts and private projects.
 
 ### As an MCP server (any client)
 
@@ -93,7 +96,8 @@ claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- npx -y @justin
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `MODRINTH_TOKEN` | – | Modrinth Personal Access Token. Required for write actions. |
+| `MODRINTH_TOKEN` | – | Modrinth Personal Access Token. Required for write actions and private reads; optional for public reads. |
+| `MODRINTH_LIVE` | unset | Test-only. Set to `1` to run the live smoke tests in `npm test`. |
 | `MODRINTH_STAGING` | unset | Set to `1` to hit `https://staging-api.modrinth.com` for safe testing. |
 | `MODRINTH_USER_AGENT` | `modrinth-mcp/<version> …` | Override the User-Agent sent to Modrinth. |
 
@@ -106,11 +110,23 @@ claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- npx -y @justin
 
 > **Note:** `create_version` and `create_project` publish public content. Only call them when you actually intend to publish.
 
+Read-only examples that need no token: `modrinth_search_projects` to find a mod, `modrinth_get_tags` with `kind: "loader"` to see valid loaders, and `modrinth_get_latest_version_from_hash` to check whether a jar you have is out of date.
+
 ## Development
 
+Requires Node.js 20 or newer.
+
 ```bash
+git clone https://github.com/tarper24/modrinth-mcp.git
+cd modrinth-mcp
 npm install
 MODRINTH_STAGING=1 MODRINTH_TOKEN=your-staging-pat npm start
+```
+
+To use a local checkout from an MCP client, point it at the entry file:
+
+```bash
+claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- node /path/to/modrinth-mcp/src/index.js
 ```
 
 The server speaks MCP over stdio. `stdout` is reserved for the protocol; logs go to `stderr`.

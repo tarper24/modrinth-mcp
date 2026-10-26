@@ -4,11 +4,11 @@
   "version": "0.1.2",
   "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
   "author": {
-    "name": "justinscott12",
-    "url": "https://github.com/justinscott12"
+    "name": "tarper24",
+    "url": "https://github.com/tarper24"
   },
-  "homepage": "https://github.com/justinscott12/modrinth-mcp#readme",
-  "repository": "https://github.com/justinscott12/modrinth-mcp",
+  "homepage": "https://github.com/tarper24/modrinth-mcp#readme",
+  "repository": "https://github.com/tarper24/modrinth-mcp",
   "license": "MIT",
   "keywords": ["modrinth", "minecraft", "fabric", "mods", "mcp"],
   "mcpServers": "./.mcp.json"

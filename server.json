@@ -3,7 +3,7 @@
   "name": "io.github.justinscott12/modrinth-mcp",
   "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) via the Modrinth API.",
   "repository": {
-    "url": "https://github.com/justinscott12/modrinth-mcp",
+    "url": "https://github.com/tarper24/modrinth-mcp",
     "source": "github"
   },
   "version": "0.1.2",

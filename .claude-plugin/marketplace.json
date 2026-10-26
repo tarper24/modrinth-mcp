@@ -1,10 +1,10 @@
 {
-  "name": "justinscott12",
+  "name": "tarper24",
   "owner": {
-    "name": "justinscott12",
-    "url": "https://github.com/justinscott12"
+    "name": "tarper24",
+    "url": "https://github.com/tarper24"
   },
-  "description": "justinscott12's Claude Code plugins.",
+  "description": "tarper24's Claude Code plugins.",
   "plugins": [
     {
       "name": "modrinth-mcp",
@@ -13,8 +13,8 @@
       "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
       "version": "0.1.2",
       "author": {
-        "name": "justinscott12",
-        "url": "https://github.com/justinscott12"
+        "name": "tarper24",
+        "url": "https://github.com/tarper24"
       },
       "license": "MIT",
       "keywords": ["modrinth", "minecraft", "fabric", "mods", "mcp"]

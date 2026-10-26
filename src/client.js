@@ -11,7 +11,7 @@ const baseUrl = () =>
     : "https://api.modrinth.com";
 const userAgent = () =>
   process.env.MODRINTH_USER_AGENT ||
-  `modrinth-mcp/${VERSION} (+https://github.com/justinscott12/modrinth-mcp)`;
+  `modrinth-mcp/${VERSION} (+https://github.com/tarper24/modrinth-mcp)`;
 const token = () => process.env.MODRINTH_TOKEN || "";
 
 export const describeConfig = () => ({

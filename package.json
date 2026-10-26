@@ -28,15 +28,15 @@
     "mods",
     "claude"
   ],
-  "author": "justinscott12 (https://github.com/justinscott12)",
+  "author": "tarper24 (https://github.com/tarper24)",
   "license": "MIT",
-  "homepage": "https://github.com/justinscott12/modrinth-mcp#readme",
+  "homepage": "https://github.com/tarper24/modrinth-mcp#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justinscott12/modrinth-mcp.git"
+    "url": "git+https://github.com/tarper24/modrinth-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/justinscott12/modrinth-mcp/issues"
+    "url": "https://github.com/tarper24/modrinth-mcp/issues"
   },
   "publishConfig": {
     "access": "public"
