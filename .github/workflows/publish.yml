@@ -1,0 +1,49 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+# Least privilege: read the repo, and mint an OIDC token for npm trusted publishing.
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Trusted publishing (OIDC) needs npm >= 11.5.1, which ships with Node 24.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Verify package.json version matches the release tag
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          pkg_version="$(node -p "require('./package.json').version")"
+          tag_version="${TAG#v}"
+          if [ "$pkg_version" != "$tag_version" ]; then
+            echo "::error::package.json version ($pkg_version) does not match release tag '$TAG' ($tag_version). Bump package.json or re-tag the release."
+            exit 1
+          fi
+          echo "Version $pkg_version matches release tag $TAG"
+
+      - run: npm ci
+
+      - run: npm test
+
+      # Prereleases publish under the `next` dist-tag so they never become `latest`.
+      - name: Publish
+        env:
+          PRERELEASE: ${{ github.event.release.prerelease }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then
+            npm publish --access public --tag next
+          else
+            npm publish --access public
+          fi
