@@ -2,7 +2,10 @@
  * Modrinth HTTP client helpers shared by the tool modules.
  */
 
-export const VERSION = "0.1.2";
+import { createRequire } from "node:module";
+
+// package.json is the single source of truth for the version.
+export const { version: VERSION } = createRequire(import.meta.url)("../package.json");
 
 // Env is read per call (not at import) so tests and hosts can change it.
 const baseUrl = () =>
