@@ -2,7 +2,7 @@
   "mcpServers": {
     "modrinth": {
       "command": "npx",
-      "args": ["-y", "@justinscott12/modrinth-mcp"],
+      "args": ["-y", "@tarper24/modrinth-mcp"],
       "env": {
         "MODRINTH_TOKEN": "${MODRINTH_TOKEN}"
       }

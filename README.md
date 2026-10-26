@@ -2,7 +2,7 @@
 
 An [MCP](https://modelcontextprotocol.io) server that wraps the [Modrinth](https://modrinth.com) API so an AI agent (Claude Code, Claude Desktop, Cursor, …) can search projects, read anything the public [Modrinth API](https://docs.modrinth.com/api/) exposes (projects, versions, hash lookups, users, teams, tags, and your private notifications/reports), and **publish Minecraft mods** — create projects and upload built jars as new versions.
 
-> This is a fork of [justinscott12/modrinth-mcp](https://github.com/justinscott12/modrinth-mcp). It adds the full set of read endpoints and an automated test suite. The npm package and registry identifiers are still `@justinscott12/modrinth-mcp`, so `npx` installs below fetch the upstream release until this fork is published. To use this version now, [run it from source](#development).
+> This is a fork of [justinscott12/modrinth-mcp](https://github.com/justinscott12/modrinth-mcp). It adds the full set of read endpoints and an automated test suite, and is published to npm as `@tarper24/modrinth-mcp`.
 
 ## Tools
 
@@ -77,7 +77,7 @@ Add to your MCP client config (e.g. Claude Desktop `claude_desktop_config.json`)
   "mcpServers": {
     "modrinth": {
       "command": "npx",
-      "args": ["-y", "@justinscott12/modrinth-mcp"],
+      "args": ["-y", "@tarper24/modrinth-mcp"],
       "env": {
         "MODRINTH_TOKEN": "your-modrinth-pat"
       }
@@ -89,7 +89,7 @@ Add to your MCP client config (e.g. Claude Desktop `claude_desktop_config.json`)
 Or in Claude Code directly:
 
 ```bash
-claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- npx -y @justinscott12/modrinth-mcp
+claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- npx -y @tarper24/modrinth-mcp
 ```
 
 ## Environment variables
